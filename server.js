@@ -6,6 +6,10 @@ const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
 const app = express();
 
+//Body-parser config
+app.use(express.urlencoded())
+app.use(express.json())
+
 //Let's write our first route
 app.get('/', (req, res) => res.send('Hello World!'));
 
