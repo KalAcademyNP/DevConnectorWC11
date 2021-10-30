@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const passport = require('passport');
 const db = require('./config/keys');
 const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
@@ -9,6 +10,10 @@ const app = express();
 //Body-parser config
 app.use(express.urlencoded())
 app.use(express.json())
+
+//Passport configuration
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 //Let's write our first route
 app.get('/', (req, res) => res.send('Hello World!'));
