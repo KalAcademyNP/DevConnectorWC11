@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Provider} from 'react-redux';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css';
 import Footer from './components/layout/Footer';
 import Navbar from './components/layout/Navbar';
@@ -16,11 +16,11 @@ class App extends Component {
         <Router>
           <div className="App">
             <Navbar />
-            <Routes>
-              <Route exact path="/" element={<Landing />} />
-              <Route exact path="/register" element={<Register />} />
-              <Route exact path="/login" element={<Login />} />
-            </Routes>
+
+              <Route exact path="/" component={Landing} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+
             <Footer />
           </div>
         </Router>

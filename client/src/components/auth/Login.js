@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import axios from 'axios';
+import {connect} from 'react-redux';
+import {loginUser} from '../../actions/authActions';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { withRouter} from 'react-router-dom';
 
 class Login extends Component {
   constructor() {
@@ -8,8 +11,7 @@ class Login extends Component {
 
     this.state = {
       email: '',
-      password: '',
-      errors: {}
+      password: ''
     }
   }
 
@@ -24,16 +26,13 @@ class Login extends Component {
       password: this.state.password
     };
 
-    axios
-      .post('/api/users/login', user)
-      .then(res => console.log(res.data))
-      .catch(err => this.setState({errors: err.response.data}));
+    this.props.loginUser(user);
   }
 
 
 
   render() {
-    const {errors} = this.state;
+    const {errors} = this.props;
     return (
       <div className="login">
         <div className="container">
@@ -79,4 +78,14 @@ class Login extends Component {
   }
 }
 
-export default Login;
+
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+}
+
+const mapStatetoProps = (state) => ({
+  errors: state.errors
+})
+
+export default connect(mapStatetoProps, {loginUser}) (withRouter(Login));
