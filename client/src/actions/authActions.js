@@ -13,7 +13,7 @@ export const registerUser = (userData, history) => dispatch => {
        }));
 }
 
-export const loginUser = userData => dispatch => {
+export const loginUser = (userData, history) => dispatch => {
     axios
       .post('/api/users/login', userData)
       .then(res => {
@@ -28,10 +28,24 @@ export const loginUser = userData => dispatch => {
         dispatch({
           type: SET_USER,
           payload: decoded
-        });       
+        });    
+        history.push('/dashboard');
       })
       .catch(err => dispatch({
          type: GET_ERRORS,
          payload: err.response.data
        }));
+}
+
+//Logout user
+export const logoutUser = () => dispatch => {
+  //Remove token from localstorage
+  localStorage.removeItem('jwtToken');
+  //Remove the token from the auth header
+  setAuthToken(false);
+  //Clean the redux store
+  dispatch({
+    type: SET_USER,
+    payload: {}
+  });
 }

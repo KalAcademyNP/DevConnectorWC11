@@ -26,20 +26,8 @@ class Login extends Component {
       password: this.state.password
     };
 
-    this.props.loginUser(user);
+    this.props.loginUser(user, this.props.history);
   }
-
-  componentWillReceiveProps(nextProps){
-    if(nextProps.auth.isAuthenticated){
-      this.props.history.push('/dashboard');
-    }
-  }
-
-  // static getDerivedStateFromProps(props, state){
-  //     if(props.auth.isAuthenticated){
-  //     this.props.history.push('/dashboard');
-  //   } 
-  // }
 
   render() {
     const {errors} = this.props;
