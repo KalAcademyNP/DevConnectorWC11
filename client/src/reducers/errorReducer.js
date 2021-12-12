@@ -1,12 +1,16 @@
-import { GET_ERRORS } from "../actions/types";
+import { CLEAR_ERRORS, SET_ERROR, GET_ERRORS } from "../actions/types";
+
 const initialState = {};
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default function(state=initialState, action){
+export default function(state=initialState, action) {
   switch(action.type){
     case GET_ERRORS:
       return action.payload;
-    default: 
+    case SET_ERROR:
+      return action.payload;
+    case CLEAR_ERRORS:
+      return state;
+    default:
       return state;
   }
 }

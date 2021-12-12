@@ -15,12 +15,18 @@ app.use(express.json())
 app.use(passport.initialize());
 require('./config/passport')(passport);
 
-//Let's write our first route
-app.get('/', (req, res) => res.send('Hello World!'));
 
 app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts)
+
+if (process.env.NODE_ENV === 'production'){
+        app.use(express.static('client/build'));
+
+        app.get('*', (req, res) => {
+                res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+        })
+}
 
 //Connect to db
 mongoose.connect(db.mongoURI)
@@ -28,5 +34,5 @@ mongoose.connect(db.mongoURI)
         .catch((err) => console.log(err) );
 
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server is running on port ${port}`) );
